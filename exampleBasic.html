@@ -1,0 +1,52 @@
+<script src="/socket.io/socket.io.js"></script>
+
+
+<script>
+
+    let socket = io();
+
+
+    socket.on('returnState', (state) => {
+        //Draw the game
+        if(state.playerHand){
+            for(let i =0; i <= state.playerHand.length-1; i ++){
+                document.getElementById('button'+i).textContent = state.playerHand[i].type + '  ' + state.playerHand[i].power;
+            }
+        }
+
+        if(state.board){
+            document.getElementById('boardText').textContent = JSON.stringify(state.board) 
+        }
+
+    }) // Return State
+
+    function sendMove(move){
+        socket.emit('move',move)
+    }
+
+</script>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <h1 id="boardText">Board Cards </h1>
+    <button id="button0" onclick="sendMove(0)">Card One</button>
+    <button id="button1" onclick="sendMove(1)">Card Two</button>
+    <button  id="button2" onclick="sendMove(2)">Card Three</button>
+
+    <button  id="button3" onclick="sendMove(3)">Card Four</button>
+    <button  id="button4" onclick="sendMove(4)">Card Five</button>
+    <button  id="button5" onclick="sendMove(5)">Card Six</button>
+</body>
+
+</html>
